@@ -1,14 +1,33 @@
 package com.wallpaper;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
 
-import android.os.Bundle;
 
-public class SplashScreenModule extends AppCompatActivity {
+public class SplashScreenModule extends ReactContextBaseJavaModule {
+    public SplashScreenModule(ReactApplicationContext reactContext) {
+        super(reactContext);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen_module);
+    public String getName() {
+        return "SplashScreen";
+    }
+
+    /**
+     * 打开启动屏
+     */
+    @ReactMethod
+    public void show() {
+        SplashScreen.show(getCurrentActivity());
+    }
+
+    /**
+     * 关闭启动屏
+     */
+    @ReactMethod
+    public void hide() {
+        SplashScreen.hide(getCurrentActivity());
     }
 }

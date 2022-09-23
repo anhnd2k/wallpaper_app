@@ -14,7 +14,7 @@ const TodoReducer = (state = initState, action: Action) => {
     case ACTION_01:
       return state;
     default:
-      break;
+      return state;
   }
 };
 

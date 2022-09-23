@@ -1,16 +1,16 @@
 import React from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import CombineReducers from './combineReducers';
+import CombineReducers from './CombineReducers';
 
 interface Props {
   children: React.ReactNode;
 }
 
-const Store = createStore(CombineReducers);
+const store = createStore(CombineReducers);
 
 const StoreProvider = ({children}: Props) => {
-  return <Provider store={Store}>{children}</Provider>;
+  return <Provider store={store}>{children}</Provider>;
 };
 
 export default StoreProvider;

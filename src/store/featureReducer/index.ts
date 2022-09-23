@@ -1,3 +1,3 @@
-import TodoReducer from './todoReducer';
+import TodoReducer from './TodoReducer';
 
 export {TodoReducer};
