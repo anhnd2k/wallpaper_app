@@ -1,3 +1,4 @@
 import TodoReducer from './TodoReducer';
+import ThemeReduces from './ThemeReducer';
 
-export {TodoReducer};
+export {TodoReducer, ThemeReduces};
