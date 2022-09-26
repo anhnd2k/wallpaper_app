@@ -1,13 +1,18 @@
 import {Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useTheme, DefaultTheme} from 'styled-components';
-
 import {ACTION_01} from './store/constant';
 import {
   changeDankMode,
   changeLightMode,
 } from './store/featureReducer/ThemeReducer';
+
+import {
+  showNotification,
+  handleScheduleNotification,
+  handeCancel,
+} from './localNotification/notification';
 
 const Main = () => {
   const theme: DefaultTheme = useTheme();
@@ -37,14 +42,18 @@ const Main = () => {
         backgroundColor: theme.colors.background,
         alignItems: 'center',
       }}>
-      <TouchableOpacity onPress={actionTodo}>
-        <Text style={{color: theme.colors.white}}>dispatch action todo</Text>
+      <TouchableOpacity
+        onPress={() => showNotification('hoang anh', 'yeu nguoi minh yeu')}>
+        <Text style={{color: theme.colors.white}}>11111</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={changeThemeLight}>
-        <Text style={{color: theme.colors.white}}>light theme</Text>
+      <TouchableOpacity
+        onPress={() =>
+          handleScheduleNotification('hoang anh 222', 'yeu nguoi minh yeu 2222')
+        }>
+        <Text style={{color: theme.colors.white}}>222222</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={changeThemeDark}>
-        <Text style={{color: theme.colors.white}}>dark theme</Text>
+      <TouchableOpacity onPress={handeCancel}>
+        <Text style={{color: theme.colors.white}}>333333</Text>
       </TouchableOpacity>
     </View>
   );

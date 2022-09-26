@@ -1,7 +1,4 @@
-import {createReducer, createAction, createSlice} from '@reduxjs/toolkit';
-// import {useState} from 'react';
-// import {CHANGE_DANK_MODE, CHANGE_LIGHT_MODE} from '../constant';
-
+import {createSlice} from '@reduxjs/toolkit';
 interface Action {
   type: string;
   payload: any;
