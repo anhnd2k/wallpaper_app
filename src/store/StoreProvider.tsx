@@ -1,16 +1,15 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
-import {createStore} from 'redux';
-import {Provider, useSelector} from 'react-redux';
-import {ThemeProvider} from 'styled-components';
+import {Provider} from 'react-redux';
 import CombineReducers from './CombineReducers';
-
+import {configureStore} from '@reduxjs/toolkit';
+// import ThemeReduces from './featureReducer/ThemeReducer';
 
 interface Props {
   children: React.ReactNode;
 }
 
-const store = createStore(CombineReducers);
+// const store = createStore(CombineReducers);
+const store = configureStore(CombineReducers);
 
 const StoreProvider = ({children}: Props) => {
   return (

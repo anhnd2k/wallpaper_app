@@ -1,6 +1,7 @@
 // import {DarkTheme} from '@react-navigation/native';
-const Dark = {
-  dark: true,
+import {DefaultTheme} from 'styled-components';
+
+const Dark: DefaultTheme = {
   //   ...DarkTheme,
   colors: {
     // ...DarkTheme.colors,

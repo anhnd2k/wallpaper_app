@@ -1,19 +1,32 @@
 import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {useTheme} from 'styled-components';
-import {CHANGE_DANK_MODE, CHANGE_LIGHT_MODE} from './store/constant';
+import {useTheme, DefaultTheme} from 'styled-components';
+
+import {ACTION_01} from './store/constant';
+import {
+  changeDankMode,
+  changeLightMode,
+} from './store/featureReducer/ThemeReducer';
 
 const Main = () => {
-  const theme = useTheme();
+  const theme: DefaultTheme = useTheme();
 
   const dispatch = useDispatch();
   const changeThemeLight = () => {
-    dispatch({type: CHANGE_LIGHT_MODE, payload: 'light'});
+    const action = changeLightMode('light');
+    dispatch(action);
+    // dispatch({type: CHANGE_LIGHT_MODE, payload: 'light'});
+  };
+
+  const actionTodo = () => {
+    dispatch({type: ACTION_01, payload: 'ngo hoang anh'});
   };
 
   const changeThemeDark = () => {
-    dispatch({type: CHANGE_LIGHT_MODE, payload: 'dark'});
+    const action = changeDankMode('dark');
+    dispatch(action);
+    // dispatch({type: CHANGE_LIGHT_MODE, payload: 'dark'});
   };
 
   return (
@@ -24,6 +37,9 @@ const Main = () => {
         backgroundColor: theme.colors.background,
         alignItems: 'center',
       }}>
+      <TouchableOpacity onPress={actionTodo}>
+        <Text style={{color: theme.colors.white}}>dispatch action todo</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={changeThemeLight}>
         <Text style={{color: theme.colors.white}}>light theme</Text>
       </TouchableOpacity>
