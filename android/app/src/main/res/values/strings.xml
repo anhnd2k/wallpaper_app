@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">wallpaper</string>
+    <!-- rename app in here -->
+    <string name="app_name">wallpaper</string> 
 </resources>

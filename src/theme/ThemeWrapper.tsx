@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components';
 import {useSelector} from 'react-redux';
 import lightTheme from '../theme/Light';
 import darkTheme from '../theme/Dark';
-import {IRootState} from '../store/CombineReducers';
+import {IRootState} from '../store/reducers';
 
 const ThemeWrapper = ({children}: {children: React.ReactNode}) => {
   const theme = useSelector((state: IRootState) => state.ThemeReduces.theme);

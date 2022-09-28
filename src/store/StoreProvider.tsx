@@ -1,30 +1,41 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import CombineReducers from './CombineReducers';
+import reducer from './reducers';
 import {configureStore} from '@reduxjs/toolkit';
-// import ThemeReduces from './featureReducer/ThemeReducer';
+import {persistStore, persistReducer} from 'redux-persist';
+import {PersistGate} from 'redux-persist/integration/react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Text} from 'react-native';
 
 interface Props {
   children: React.ReactNode;
 }
 
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+  whitelist: ['ThemeReduces'],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
 // const store = createStore(CombineReducers);
-const store = configureStore(CombineReducers);
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
+const persistor = persistStore(store);
 
 const StoreProvider = ({children}: Props) => {
   return (
-    <Provider store={store}>{children}</Provider>
-    // <Provider store={store}>
-    //   {/* theme={theme === 'dark' ? darkTheme : lightTheme} */}
-    //   <ThemeProvider theme={darkTheme}>
-    //     <>
-    //       {/* <StatusBar
-    //         barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
-    //       /> */}
-    //       {children}
-    //     </>
-    //   </ThemeProvider>
-    // </Provider>
+    <Provider store={store}>
+      <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+        {children}
+      </PersistGate>
+    </Provider>
   );
 };
 

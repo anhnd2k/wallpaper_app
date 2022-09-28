@@ -284,7 +284,7 @@ dependencies {
     }
 }
 
-apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'com.google.gms.google-services'
 
 if (isNewArchitectureEnabled()) {
     // If new architecture is enabled, we let you build RN from source

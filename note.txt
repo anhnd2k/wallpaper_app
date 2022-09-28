@@ -1,0 +1,20 @@
+change name project
+
+Change the name and version accordingly on package.json
+
+First copy the directory which your to-be-name-changed application exists. And go to your newly cloned directory.
+
+Change the name at index.ios/android.js file which is given as a parameter to AppRegistry.
+
+Change the name and version accordingly on package.json
+
+delete /ios and /android folders which are remaining from your older app as well as the app.json file if you have.
+
+run $react-native upgrade to generate /ios and /android folders again.
+
+run $react-native link for any external dependency.
+
+finally run $react-native run-ios or anything you want.
+
+in android: 
+=> android/app/src/main/res/values/string.xml => change name
