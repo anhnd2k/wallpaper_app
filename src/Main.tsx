@@ -1,7 +1,7 @@
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, Alert} from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import styled, {useTheme, DefaultTheme} from 'styled-components';
+import {useTheme, DefaultTheme} from 'styled-components';
 import {ACTION_01} from './store/constant';
 import {
   changeDankMode,
@@ -9,13 +9,14 @@ import {
 } from './store/featureReducer/ThemeReducer';
 
 import {showNotification} from './localNotification/notification';
+import messaging from '@react-native-firebase/messaging';
 
-const WrapMain = styled.view`
-  justify-content: center;
-  flex: 1;
-  align-items: center;
-  background-color: ${props => props.theme.colors.background};
-`;
+// const WrapMain = styled.view`
+//   justify-content: center;
+//   flex: 1;
+//   align-items: center;
+//   background-color: ${props => props.theme.colors.background};
+// `;
 
 const Main = () => {
   const theme: DefaultTheme = useTheme();
@@ -37,10 +38,35 @@ const Main = () => {
     // dispatch({type: CHANGE_LIGHT_MODE, payload: 'dark'});
   };
 
+  // async function requestUserPermission() {
+  //   const authStatus = await messaging().requestPermission();
+  //   const enabled =
+  //     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+  //     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  //   if (enabled) {
+  //     console.log('Authorization status:', authStatus);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   requestUserPermission();
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+  //   });
+  //   return unsubscribe;
+  // }, []);
+
   return (
-    <WrapMain>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.background,
+      }}>
       <TouchableOpacity
-        onPress={() => showNotification('hoang anh', 'yeu nguoi minh yeu')}>
+        onPress={() => showNotification('notification', 'test')}>
         <Text style={{color: theme.colors.white}}>11111</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -53,7 +79,7 @@ const Main = () => {
       <TouchableOpacity onPress={changeThemeDark}>
         <Text style={{color: theme.colors.white}}>333333</Text>
       </TouchableOpacity>
-    </WrapMain>
+    </View>
   );
 };
 

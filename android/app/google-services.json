@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "586080106716",
+    "project_id": "noteapp-e8e1b",
+    "storage_bucket": "noteapp-e8e1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586080106716:android:307a56a45e6af237e65c19",
+        "android_client_info": {
+          "package_name": "com.wallpaper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586080106716-6u16h77563e1vrqu5m0ti69h91n68j2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNFBsGL3KEp42vs1mCA9bNJFA_mrHhnAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586080106716-6u16h77563e1vrqu5m0ti69h91n68j2p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "586080106716-s16euf498er48j7n9qaakmr4b8r6ajlu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.wallpaper"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
