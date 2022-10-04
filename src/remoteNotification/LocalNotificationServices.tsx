@@ -1,9 +1,10 @@
 import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {showNotification} from '../localNotification/notification';
 
 class LocalNotificationServices {
-  configure = onOpenNotification => {
+  configure = (onOpenNotification: any) => {
     PushNotification.configure({
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function (token) {
@@ -22,19 +23,13 @@ class LocalNotificationServices {
         if (Platform.OS === 'ios') {
           notification.finish(PushNotificationIOS.FetchResult.NoData);
         }
-        console.log('NOTIFICATION:', notification);
-
-        // process the notification
-
-        // (required) Called when a remote is received or opened, or local notification is opened
+        console.log('NOTIFICATION: onOpenNotification', notification);
       },
 
       // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
       onAction: function (notification) {
         console.log('ACTION:', notification.action);
-        console.log('NOTIFICATION:', notification);
-
-        // process the action
+        console.log('NOTIFICATION: onAction', notification);
       },
 
       // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
@@ -48,31 +43,34 @@ class LocalNotificationServices {
         badge: true,
         sound: true,
       },
-
-      // Should the initial notification be popped automatically
-      // default: true
       popInitialNotification: true,
-
-      /**
-       * (optional) default: true
-       * - Specified if permissions (ios) and token (android and ios) will requested or not,
-       * - if not, you must call PushNotificationsHandler.requestPermissions() later
-       * - if you are not using remote notification or do not have Firebase installed, use this:
-       *     requestPermissions: Platform.OS === 'ios'
-       */
       requestPermissions: Platform.OS === 'ios',
     });
   };
 
-  showNotification = (id, title, message, data = {}, options = {}) => {
-    PushNotification.localNotification({
-      // ...this.buildAndroidNotification(id, title, message, data, options),
-      // ...this.buildIOSNotification(id, title, message, data, options),
-      title: title || '',
-      message: message || '',
-      playSound: false,
-      soundName: 'default',
-    });
+  unregister = () => {
+    PushNotification.unregister();
+  };
+
+  showNotification = (title: string, message: string) => {
+    // PushNotification.localNotification({
+    //   id: '2',
+    //   title: title || '',
+    //   message: message || '',
+    // });
+    showNotification(title, message);
+  };
+
+  cancelAllLocalNotifications = () => {
+    if (Platform.OS === 'ios') {
+      PushNotificationIOS.removeAllDeliveredNotifications();
+    } else {
+      PushNotification.cancelAllLocalNotifications();
+    }
+  };
+
+  removeDeliveredNotificationById = (notificationId: string) => {
+    PushNotification.cancelLocalNotification(notificationId);
   };
 }
 

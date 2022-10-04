@@ -1,15 +1,16 @@
-import {Text, TouchableOpacity, View, Alert} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useTheme, DefaultTheme} from 'styled-components';
-import {ACTION_01} from './store/constant';
 import {
   changeDankMode,
   changeLightMode,
 } from './store/featureReducer/ThemeReducer';
 
 import {showNotification} from './localNotification/notification';
-import messaging from '@react-native-firebase/messaging';
+import {fcmService} from './remoteNotification/FCMService';
+import {localNotification} from './remoteNotification/LocalNotificationServices';
+import PushNotification from 'react-native-push-notification';
 
 // const WrapMain = styled.view`
 //   justify-content: center;
@@ -21,22 +22,45 @@ import messaging from '@react-native-firebase/messaging';
 const Main = () => {
   const theme: DefaultTheme = useTheme();
 
-  const dispatch = useDispatch();
-  const changeThemeLight = () => {
-    const action = changeLightMode('light');
-    dispatch(action);
-    // dispatch({type: CHANGE_LIGHT_MODE, payload: 'light'});
-  };
+  // useEffect(() => {
+  //   fcmService.registerAppWithFCM();
+  //   fcmService.register(onRegister, onNotification, onOpenNotification);
+  //   localNotification.configure(onOpenNotification);
 
-  const actionTodo = () => {
-    dispatch({type: ACTION_01, payload: 'ngo hoang anh'});
-  };
+  //   function onRegister(notify: any) {
+  //     console.log('==>> onRegister', notify);
+  //     localNotification.showNotification(notify?.title, notify?.body);
+  //   }
 
-  const changeThemeDark = () => {
-    const action = changeDankMode('dark');
-    dispatch(action);
-    // dispatch({type: CHANGE_LIGHT_MODE, payload: 'dark'});
-  };
+  //   function onNotification(notify: any) {
+  //     console.log('==>> onNotification', notify);
+  //     localNotification.showNotification(notify?.title, notify?.body);
+  //   }
+
+  //   function onOpenNotification(notify: any) {
+  //     console.log('==>> onOpenNotification', notify);
+  //   }
+
+  //   return () => {
+  //     console.log('==>> unRefister');
+  //     localNotification.unregister();
+  //   };
+  // }, []);
+
+  // const dispatch = useDispatch();
+  // const changeThemeLight = () => {
+  //   const action = changeLightMode('light');
+  //   dispatch(action);
+  // };
+
+  // const actionTodo = () => {
+  //   dispatch({type: ACTION_01, payload: 'ngo hoang anh'});
+  // };
+
+  // const changeThemeDark = () => {
+  //   const action = changeDankMode('dark');
+  //   dispatch(action);
+  // };
 
   // async function requestUserPermission() {
   //   const authStatus = await messaging().requestPermission();
@@ -66,17 +90,23 @@ const Main = () => {
         backgroundColor: theme.colors.background,
       }}>
       <TouchableOpacity
-        onPress={() => showNotification('notification', 'test')}>
+        onPress={() => {
+          PushNotification.localNotification({
+            channelId: '1',
+            title: 'title',
+            message: 'message',
+          });
+        }}>
         <Text style={{color: theme.colors.white}}>11111</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() =>
+        onPress={() => {
           // handleScheduleNotification('hoang anh 222', 'yeu nguoi minh yeu 2222')
-          changeThemeLight()
-        }>
+          // changeThemeLight();
+        }}>
         <Text style={{color: theme.colors.white}}>222222</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={changeThemeDark}>
+      <TouchableOpacity>
         <Text style={{color: theme.colors.white}}>333333</Text>
       </TouchableOpacity>
     </View>

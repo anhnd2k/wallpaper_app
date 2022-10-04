@@ -13,6 +13,8 @@ const ThemeWrapper = ({children}: {children: React.ReactNode}) => {
       <>
         <StatusBar
           barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+          backgroundColor="transparent"
+          translucent
         />
         {children}
       </>
