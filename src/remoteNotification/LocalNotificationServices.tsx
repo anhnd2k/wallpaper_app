@@ -1,7 +1,7 @@
-import {Platform} from 'react-native';
+import {Platform, AppState} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {showNotification} from '../localNotification/notification';
+// import {showNotification} from '../localNotification/notification';
 
 class LocalNotificationServices {
   configure = (onOpenNotification: any) => {
@@ -9,21 +9,28 @@ class LocalNotificationServices {
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function (token) {
         console.log('TOKEN:', token);
+        PushNotification.popInitialNotification(notification => {
+          if (notification) {
+            console.log('notification:', notification);
+          }
+        });
       },
 
       // (required) Called when a remote is received or opened, or local notification is opened
       onNotification: function (notification) {
+        console.log('===>>>>>>>>> opent notify');
+
         if (!notification?.data) {
           return;
         }
         notification.userInteraction = true;
+
         onOpenNotification(
           Platform.OS === 'ios' ? notification.data.item : notification.data,
         );
         if (Platform.OS === 'ios') {
           notification.finish(PushNotificationIOS.FetchResult.NoData);
         }
-        console.log('NOTIFICATION: onOpenNotification', notification);
       },
 
       // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
@@ -53,12 +60,12 @@ class LocalNotificationServices {
   };
 
   showNotification = (title: string, message: string) => {
-    // PushNotification.localNotification({
-    //   id: '2',
-    //   title: title || '',
-    //   message: message || '',
-    // });
-    showNotification(title, message);
+    PushNotification.localNotification({
+      channelId: 'channel-id',
+      title: title || '',
+      message: message || '',
+    });
+    // showNotification(title, message);
   };
 
   cancelAllLocalNotifications = () => {

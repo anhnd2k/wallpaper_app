@@ -8,11 +8,44 @@ class FCMService {
     onOpenNotification: any,
   ) => {
     this.checkPermission(onRegister);
-    this.createNotificationListeners(
-      onRegister,
-      onNotification,
-      onOpenNotification,
-    );
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log('onNotificationOpenedApp Notification caused app to open');
+      if (remoteMessage) {
+        const notification = remoteMessage.notification;
+        console.log('===>>> dmmmmmmmmmmmm');
+
+        onOpenNotification(notification);
+      }
+    });
+
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        console.log('getInitialNotification Notification caused app to open');
+        if (remoteMessage) {
+          const notification = remoteMessage.notification;
+          console.log('===>>> dmmmmmmmmmmmm');
+
+          onOpenNotification(notification);
+        }
+      });
+
+    messaging().onMessage(async remoteMessage => {
+      if (remoteMessage) {
+        let notification = null;
+        if (Platform.OS === 'ios') {
+          notification = remoteMessage?.data?.notification;
+        } else {
+          notification = remoteMessage.notification;
+        }
+        onNotification(notification);
+      }
+    });
+    // this.createNotificationListeners(
+    //   onRegister,
+    //   onNotification,
+    //   onOpenNotification,
+    // );
   };
 
   registerAppWithFCM = async () => {
@@ -41,7 +74,6 @@ class FCMService {
       .then(fcmToken => {
         if (fcmToken) {
           onRegister(fcmToken);
-          console.log('==>> fcmToken', fcmToken);
         } else {
           console.log('cc fcm token');
         }
@@ -72,11 +104,9 @@ class FCMService {
   ) => {
     messaging().onNotificationOpenedApp(remoteMessage => {
       console.log('onNotificationOpenedApp Notification caused app to open');
-
       if (remoteMessage) {
         const notification = remoteMessage.notification;
         onOpenNotification(notification);
-        console.log('==>> onNotificationOpenedApp', notification);
       }
     });
 
@@ -87,7 +117,6 @@ class FCMService {
         if (remoteMessage) {
           const notification = remoteMessage.notification;
           onOpenNotification(notification);
-          console.log('==>> getInitialNotification', notification);
         }
       });
 
@@ -99,14 +128,14 @@ class FCMService {
         } else {
           notification = remoteMessage.notification;
         }
+        console.log('==>> dm lam the');
+
         onNotification(notification);
-        console.log('==>>> onMessage', notification);
       }
     });
-    messaging().onTokenRefresh(fcmToken => {
-      onregister(fcmToken);
-      console.log('==>>> onTokenRefresh', fcmToken);
-    });
+    // messaging().onTokenRefresh(fcmToken => {
+    //   onregister(fcmToken);
+    // });
   };
   // unRegister = () => {
   //   this.messagelistener();

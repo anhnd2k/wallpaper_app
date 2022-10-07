@@ -22,6 +22,7 @@
                     android:resource="@color/white"/> <!-- or @android:color/{name} to use a standard color -->
 
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" android:exported="false"/>
+        <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" android:exported="false"/>
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" android:exported="false"/>
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver" android:exported="false">
             <intent-filter>
@@ -51,6 +52,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.INFO" /> 
             </intent-filter>
         </activity>
         <activity

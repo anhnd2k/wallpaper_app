@@ -6,7 +6,7 @@ const showNotification = (title: string, message: string) => {
   //   alertBody: message,
   // });
   PushNotificationIOS.addNotificationRequest({
-    id: '1',
+    id: 'channel-id',
     title: title,
     subtitle: message,
   });
@@ -16,7 +16,7 @@ const handleScheduleNotification = (title: string, message: string) => {
   const date = new Date();
   date.setSeconds(date.getSeconds() + 5);
   PushNotificationIOS.addNotificationRequest({
-    id: '1',
+    id: 'channel-id',
     title: title,
     subtitle: message,
     fireDate: date,

@@ -2,7 +2,7 @@ import PushNotification from 'react-native-push-notification';
 
 const showNotification = (title: string, message: string) => {
   PushNotification.localNotification({
-    channelId: '1',
+    channelId: 'channel-id',
     title: title,
     message: message,
   });
@@ -10,7 +10,7 @@ const showNotification = (title: string, message: string) => {
 
 const handleScheduleNotification = (title: string, message: string) => {
   PushNotification.localNotificationSchedule({
-    channelId: '1',
+    channelId: 'channel-id',
     title: title,
     message: message,
     date: new Date(Date.now() + 60 * 1000),
