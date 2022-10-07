@@ -8,8 +8,10 @@ import {
   changeLightMode,
 } from './store/featureReducer/ThemeReducer';
 
-import {showNotification} from './localNotification/notification';
 import messaging from '@react-native-firebase/messaging';
+import navigationService from './natigations/navigationService';
+import {navigationRoutes} from './natigations/StackNavigator';
+import {showNotification} from 'src/localNotification/notification';
 
 // const WrapMain = styled.view`
 //   justify-content: center;
@@ -20,6 +22,41 @@ import messaging from '@react-native-firebase/messaging';
 
 const Main = () => {
   const theme: DefaultTheme = useTheme();
+
+  const NotificaitonListner = () => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+    });
+
+    // background when quit app
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+          );
+        }
+      });
+
+    messaging().onMessage(async remoteMessage => {
+      console.log("===>>> 'A new FCM message arrived! leeeee", remoteMessage);
+      showNotification(
+        remoteMessage?.notification?.title,
+        remoteMessage?.notification?.body,
+      );
+    });
+  };
+
+  useEffect(() => {
+    NotificaitonListner();
+  }, []);
+
+  // background when on app
 
   const dispatch = useDispatch();
   const changeThemeLight = () => {
@@ -38,25 +75,6 @@ const Main = () => {
     // dispatch({type: CHANGE_LIGHT_MODE, payload: 'dark'});
   };
 
-  // async function requestUserPermission() {
-  //   const authStatus = await messaging().requestPermission();
-  //   const enabled =
-  //     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-  //     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  //   if (enabled) {
-  //     console.log('Authorization status:', authStatus);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   requestUserPermission();
-  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
-  //     Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-  //   });
-  //   return unsubscribe;
-  // }, []);
-
   return (
     <View
       style={{
@@ -66,14 +84,10 @@ const Main = () => {
         backgroundColor: theme.colors.background,
       }}>
       <TouchableOpacity
-        onPress={() => showNotification('notification', 'test')}>
+        onPress={() => navigationService.navigate(navigationRoutes.HOME)}>
         <Text style={{color: theme.colors.white}}>11111</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() =>
-          // handleScheduleNotification('hoang anh 222', 'yeu nguoi minh yeu 2222')
-          changeThemeLight()
-        }>
+      <TouchableOpacity onPress={() => showNotification('dd', 'dd')}>
         <Text style={{color: theme.colors.white}}>222222</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={changeThemeDark}>

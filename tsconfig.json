@@ -10,7 +10,15 @@
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "incremental": true,
+    "paths": {
+      "src/*": ["*"],
+      // "components/*": ["components/*"],
+      // "svg/*": ["assets/svg/*"],
+      // "images/*": ["assets/images/*"]
+    },
+    "baseUrl": "src",
   },
   "exclude": [
     "node_modules",
