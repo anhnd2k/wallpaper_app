@@ -60,7 +60,6 @@ export default StackNavigator;
 const styles = StyleSheet.create({
   mainStack: {
     flex: 1,
-    marginTop: 10,
     overflow: 'hidden',
   },
 });

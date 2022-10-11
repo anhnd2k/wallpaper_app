@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navigation from 'src/natigations/Navigation';
 import PushNotification from 'react-native-push-notification';
 import {showNotification} from 'src/localNotification/notification';
+import LoadingPortal from 'src/components/base/LoadingPortal';
 
 const App: React.FC = () => {
   useLayoutEffect(() => {
@@ -85,11 +86,14 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <StoreProvider>
-      <ThemeWrapper>
-        <Navigation />
-      </ThemeWrapper>
-    </StoreProvider>
+    <>
+      <StoreProvider>
+        <ThemeWrapper>
+          <Navigation />
+        </ThemeWrapper>
+      </StoreProvider>
+      <LoadingPortal />
+    </>
   );
 };
 

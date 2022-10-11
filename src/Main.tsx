@@ -1,4 +1,4 @@
-import {Text, TouchableOpacity, View, Alert} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useTheme, DefaultTheme} from 'styled-components';
@@ -12,6 +12,7 @@ import messaging from '@react-native-firebase/messaging';
 import navigationService from './natigations/navigationService';
 import {navigationRoutes} from './natigations/StackNavigator';
 import {showNotification} from 'src/localNotification/notification';
+import LoadingPortal from './components/base/LoadingPortal';
 
 // const WrapMain = styled.view`
 //   justify-content: center;
@@ -45,10 +46,10 @@ const Main = () => {
 
     messaging().onMessage(async remoteMessage => {
       console.log("===>>> 'A new FCM message arrived! leeeee", remoteMessage);
-      showNotification(
-        remoteMessage?.notification?.title,
-        remoteMessage?.notification?.body,
-      );
+      // showNotification(
+      //   remoteMessage?.notification?.title,
+      //   remoteMessage?.notification?.body,
+      // );
     });
   };
 
@@ -83,8 +84,7 @@ const Main = () => {
         justifyContent: 'center',
         backgroundColor: theme.colors.background,
       }}>
-      <TouchableOpacity
-        onPress={() => navigationService.navigate(navigationRoutes.HOME)}>
+      <TouchableOpacity onPress={() => LoadingPortal.show()}>
         <Text style={{color: theme.colors.white}}>11111</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => showNotification('dd', 'dd')}>
